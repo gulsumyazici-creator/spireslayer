@@ -8,8 +8,5 @@ default: spireslayer
 spireslayer: src/main.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-grade:
-	python3 test/grader.py ./spireslayer test-cases
-
 clean:
 	rm -f spireslayer
