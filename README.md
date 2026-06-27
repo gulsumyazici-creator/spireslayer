@@ -39,7 +39,6 @@ Malformed commands are handled by printing `INVALID`.
 .
 ├── README.md
 ├── main.c
-└── cmpe230-spring26-assignment1.pdf
 ```
 
 ## Main Components
