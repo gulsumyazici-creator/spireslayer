@@ -3,47 +3,60 @@
 This project is a command-line interpreter written in **C** for the CMPE 230 Systems Programming course.
 It simulates the bookkeeping of a roguelike deckbuilder-style run inspired by **Slay the Spire**.
 
-The program reads commands line by line, updates the current game state, and prints the required output according to the assignment specification.
+The program reads one command per line, updates the current game state, and prints the required output according to the assignment specification.
 
 ## About the Project
 
 In this project, the player controls the state of **Ironclad** through text commands.
-The interpreter keeps track of gold, health, floor progress, cards, relics, potions, combat notes, defeated enemies, and exhaust cards.
 
-Each input line is either:
+The interpreter keeps track of:
 
-* a state-changing command,
-* a read-only query,
-* or the exit command.
+* gold,
+* current HP and max HP,
+* current floor and room,
+* cards and upgraded cards,
+* relics,
+* potions,
+* enemy effectiveness notes,
+* defeated enemy counts,
+* exhaust-tagged cards.
 
-Malformed commands are handled by printing `INVALID`.
+Each input line is either a state-changing command, a read-only query, or the `Exit` command.
+
+Malformed commands print:
+
+```text
+INVALID
+```
 
 ## Features
 
 * Command-line interpreter written in C
-* Line-by-line input parsing
-* Strict command validation
+* Strict input parsing and command validation
 * Persistent game state
 * Gold, HP, floor, and room tracking
-* Deck management with base and upgraded cards
+* Deck management with base and upgraded card copies
 * Exhaust card handling
-* Relic ownership system
+* Unique relic ownership
 * Potion belt with capacity limit
 * Enemy effectiveness codex
-* Fight logic with victory/defeat outcomes
-* Query commands for checking current state
+* Fight logic with victory and defeat outcomes
+* Read-only query commands
+* Makefile-based build system
 
 ## Project Structure
 
 ```text
 .
 ├── README.md
-├── main.c
+├── Makefile
+└── src
+    └── main.c
 ```
 
-## Main Components
+## Main File
 
-### `main.c`
+### `src/main.c`
 
 Contains the full implementation of the interpreter.
 
@@ -58,21 +71,31 @@ The program includes:
 * read-only query handlers,
 * fight and inventory logic.
 
-## Supported State
+The implementation uses plain C arrays and structs to store the game state.
 
-The interpreter keeps track of:
+## How to Build
 
-* gold amount,
-* current HP and max HP,
-* current floor,
-* current room,
-* deck contents,
-* upgraded cards,
-* relics,
-* potions,
-* exhaust-tagged cards,
-* enemy effectiveness notes,
-* defeated enemy counts.
+Compile the project using the included Makefile:
+
+```bash
+make
+```
+
+This creates an executable named:
+
+```text
+spireslayer
+```
+
+## How to Run
+
+After building, run:
+
+```bash
+./spireslayer
+```
+
+Then enter commands line by line.
 
 ## Example Commands
 
@@ -91,26 +114,12 @@ Total gold ?
 Exit
 ```
 
-## How to Compile
+## Clean Build Files
 
-Use `gcc` to compile the project:
-
-```bash
-gcc main.c -o spireslayer
-```
-
-## How to Run
-
-After compiling, run:
+To remove the compiled executable:
 
 ```bash
-./spireslayer
-```
-
-On Windows, you can run:
-
-```bash
-spireslayer.exe
+make clean
 ```
 
 ## Notes
@@ -119,9 +128,10 @@ spireslayer.exe
 * Input commands must match the expected grammar.
 * Invalid syntax prints `INVALID`.
 * Semantic errors, such as not having enough gold or a missing card, print their specific error messages.
-* The program continues running until the `Exit` command is entered.
+* The program keeps running until the `Exit` command is entered.
 
 ## Course Context
 
 This project was implemented for **CMPE 230 - Systems Programming**.
-The main goal was to practice C programming, parsing, state management, arrays, string handling, and command-line interpreter design.
+The main goal was to practice C programming, parsing, command-line interpreter design, state management, arrays, structs, and string handling.
+
